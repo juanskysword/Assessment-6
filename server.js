@@ -16,7 +16,7 @@ rollbar.log('Hello world!')
 app.use(express.json())
 
 app.use(express.static('public'))
-
+app.use(rollbar.errorHandler());
 app.get('/',function(req, res) {
     req.sendFile(path.join(__dirname, '/public/index.html'))
 })
@@ -38,6 +38,7 @@ app.get('/api/robots/five', (req, res) => {
         res.status(200).send({choices, compDuo})
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
+        rollbar.log('ERROR GETTING FIVE BOTS',error)
         res.sendStatus(400)
     }
 })
@@ -63,9 +64,11 @@ app.post('/api/duel', (req, res) => {
         if (compHealthAfterAttack > playerHealthAfterAttack) {
             playerRecord.losses++
             res.status(200).send('You lost!')
+            rollbar.log('Loss')
         } else {
             playerRecord.losses++
             res.status(200).send('You won!')
+            rollbar.log('Won')
         }
     } catch (error) {
         console.log('ERROR DUELING', error)

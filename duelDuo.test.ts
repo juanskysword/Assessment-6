@@ -18,3 +18,14 @@ test('Title shows up when page loads', async () => {
     const displayed = await title.isDisplayed()
     expect(displayed).toBe(true)
 })
+test('test draw', async () => {
+    const draw = await driver.findElement(By.id('draw'))
+    const displayed = await draw.isDisplayed()
+    expect(draw).toBe(true)
+})
+test('test adding bots', async () => {
+    const draw = await driver.findElement(By.id('draw'))
+    const displayed = await draw.isDisplayed()
+    const bots = await driver.findElement(By.className('bot-btn'))
+    const displayed2 = await bots.isDisplayed()
+})
